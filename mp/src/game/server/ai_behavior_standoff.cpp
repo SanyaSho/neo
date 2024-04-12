@@ -25,7 +25,7 @@
 ConVar DrawBattleLines( "ai_drawbattlelines", "0", FCVAR_CHEAT );
 
 
-static AI_StandoffParams_t AI_DEFAULT_STANDOFF_PARAMS = { AIHCR_MOVE_ON_COVER, true, 1.5, 2.5, 1, 3, 25, 0 };
+static AI_StandoffParams_t AI_DEFAULT_STANDOFF_PARAMS = { AIHCR_MOVE_ON_COVER, true, true, 2.5, 1, 3, 25, 0 };
 
 #define MAKE_ACTMAP_KEY( posture, activity ) ( (((unsigned)(posture)) << 16) | ((unsigned)(activity)) )
 
@@ -229,7 +229,7 @@ CAI_StandoffBehavior::CAI_StandoffBehavior( CAI_BaseNPC *pOuter )
 	SetPosture( AIP_STANDING );
 	m_SavedDistTooFar = FLT_MAX;
 	m_fForceNewEnemy = false;
-	m_TimePreventForceNewEnemy.Set( 3.0, 6.0 );
+	m_TimePreventForceNewEnemy.Set( 3.0, true );
 	m_fIgnoreFronts = false;
 	m_bHasLowCoverActivity = false;
 }
