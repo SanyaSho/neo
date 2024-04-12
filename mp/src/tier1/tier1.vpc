@@ -78,6 +78,7 @@ $Project "tier1"
 		$File	"snappy.cpp"
 		$File	"snappy-sinksource.cpp"
 		$File	"snappy-stubs-internal.cpp"
+		$File	"math_proxy.cpp" [$LINUXALL]
 	}
 
 	// Select bits from the LZMA SDK to support lzmaDecoder.h
