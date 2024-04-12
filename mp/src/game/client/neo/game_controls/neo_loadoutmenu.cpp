@@ -362,7 +362,7 @@ void CNeoLoadoutMenu::ApplySchemeSettings(vgui::IScheme *pScheme)
 		}
 
 		auto str = button->GetCommand()->GetString("Command");
-		if (V_stristr(str, "loadout") > 0)
+		if (V_stristr(str, "loadout") != NULL)
 		{
 			CUtlStringList loadoutArgs;
 			V_SplitString(str, " ", loadoutArgs);

@@ -13,6 +13,8 @@
 
 #include "c_neo_player.h"
 
+#include <initializer_list>
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
