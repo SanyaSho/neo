@@ -141,9 +141,10 @@ void CNEOHud_Ammo::DrawAmmo() const
 	surface()->DrawPrintText(unicodeWepName, textLen);
 
 	const int maxClip = activeWep->GetMaxClip1();
-	if (maxClip != 0)
+	const int primaryAmmoType = activeWep->GetPrimaryAmmoType();
+	if ((maxClip > 0) && (primaryAmmoType > 0)) // SanyaSho: prevent crash when carryng host or using knife
 	{
-		const auto ammo = GetAmmoDef()->GetAmmoOfIndex(activeWep->GetPrimaryAmmoType());
+		const auto ammo = GetAmmoDef()->GetAmmoOfIndex(primaryAmmoType);
 		const int ammoCount = activeWep->GetOwner()->GetAmmoCount(ammo->pName);
 		const int numClips = abs(ammoCount / activeWep->GetMaxClip1()); // abs because grenades return negative values (???)
 		
