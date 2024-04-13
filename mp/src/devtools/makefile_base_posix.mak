@@ -54,7 +54,7 @@ BUILDING_MULTI_ARCH = 0
 ENV_CFLAGS := $(CFLAGS)
 ENV_CXXFLAGS := $(CXXFLAGS)
 CPPFLAGS = $(DEFINES) $(addprefix -I, $(abspath $(INCLUDEDIRS) ))
-BASE_CFLAGS = $(ARCH_FLAGS) $(CPPFLAGS) $(WARN_FLAGS) -fvisibility=$(SymbolVisibility) $(OptimizerLevel) -pipe $(GCC_ExtraCompilerFlags) -Usprintf -Ustrncpy -UPROTECTED_THINGS_ENABLE
+BASE_CFLAGS = $(ARCH_FLAGS) $(CPPFLAGS) $(WARN_FLAGS) -fvisibility=$(SymbolVisibility) $(OptimizerLevel) -pipe $(GCC_ExtraCompilerFlags) -Usprintf -Ustrncpy -UPROTECTED_THINGS_ENABLE -fdiagnostics-color
 CFLAGS = $(BASE_CFLAGS) $(ENV_CFLAGS)
 # In -std=gnu++0x mode we get lots of errors about "error: narrowing conversion". -fpermissive
 # turns these into warnings in gcc, and -Wno-c++11-narrowing suppresses them entirely in clang 3.1+.
@@ -99,6 +99,13 @@ else ifeq ($(USE_VALVE_BINDIR),1)
 	GCC_VER = -4.6
 	P4BIN = p4
 	CRYPTOPPDIR=linux32
+else ifeq ($(USE_LOCAL_RUNTIME),1)
+	# Using /usr/bin directory.
+	export STEAM_RUNTIME_PATH ?= /usr
+	GCC_VER =
+	P4BIN = true
+	CRYPTOPPDIR=linux32
+	DEFINES += -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-compat-version=2
 else
 	# Not using chroot, use old steam-runtime. (gcc 4.6.3)
 	export STEAM_RUNTIME_PATH ?= /valve/steam-runtime
@@ -159,6 +166,9 @@ else
 	WARN_FLAGS += -Wno-unused-variable
 	WARN_FLAGS += -Wno-unused-but-set-variable
 	WARN_FLAGS += -Wno-unused-function
+	WARN_FLAGS += -Wno-unused-local-typedefs
+	WARN_FLAGS += -Wno-class-memaccess
+	WARN_FLAGS += -Wno-ignored-attributes
 endif
 
 ifeq ($(CLANG_BUILD),1)
